@@ -23,14 +23,22 @@
     1.4 role 
     1.5 password
     1.6 solved problems
-
+    1.7 images
 2. Problems Schema 
    2.1 title
-   2.2 testcases
+   2.2 sample testcases
    2.3 hidden testcases
    2.4 initial code with language 
-   2.5 Real solution 
-   2.6 sample testcases
-   2.7 hidden testcases
+   2.5 Real solution or editorial 
+   2.6 expected of sample testcases
+   2.7 expected output of hidden testcases
+   2.8 problem id 
+   2.9 video solution 
+
+3. Submit Schema 
+    3.1 problem id 
+    3.2 user solution 
+    3.3 solution accepted or rejected 
+
 
 // Lec-1  41:53
