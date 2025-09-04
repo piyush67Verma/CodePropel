@@ -39,6 +39,3 @@
     3.1 problem id 
     3.2 user solution 
     3.3 solution accepted or rejected 
-
-
-// Lec-1  41:53
