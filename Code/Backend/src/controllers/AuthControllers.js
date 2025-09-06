@@ -70,10 +70,10 @@ const adminRegister = async (req, res)=>{
         let { password } = req.body;
         const hashString = await bcrypt.hash(password, 10);
         req.body.password = hashString;
-        req.body.role = 'admin';
+        // req.body.role = 'admin';
         const user = await User.create(req.body);
         const { _id, emailId } = user;
-        const token = jwt.sign({ _id, emailId, role:'user' }, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 60 });
+        const token = jwt.sign({ _id, emailId, role:user.role}, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 60 });
         res.cookie('token', token, { maxAge: 60 * 60 * 1000 });
         res.status(201).send("User registered successfully");
     }

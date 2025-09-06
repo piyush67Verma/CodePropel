@@ -11,6 +11,6 @@ authRouter.post('/logout', userMiddleware, logout)
 
 authRouter.get('/getProfile', getProfile);
 
-authRouter.post('/admin/register',adminMiddleware,adminRegister);
+authRouter.post('/admin/register', adminMiddleware, adminRegister);
 
 module.exports = authRouter; 
