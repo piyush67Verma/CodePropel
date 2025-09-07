@@ -1,3 +1,4 @@
-## CodePropel Code Base
+## CodePropel - *CodePropel is a coding practice platform inspired by LeetCode* 
 
-*Propel your coding skills to the next level*
+
+🚧 This project is under active development. Features are being added and improved regularly.
