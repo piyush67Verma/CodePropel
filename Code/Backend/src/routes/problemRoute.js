@@ -13,7 +13,7 @@ problemRouter.delete('/delete/:id',adminMiddleware, deleteProblem);
 
 problemRouter.get('/problemById/:id', userMiddleware, getProblemById);
 problemRouter.get('/allProblems', userMiddleware,  getAllProblems);
-problemRouter.get('/problemsSolvedByUser/:id', userMiddleware , getAllSolvedProblems);
+// problemRouter.get('/problemsSolvedByUser/:id', userMiddleware , getAllSolvedProblems);
 
 
 

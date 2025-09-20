@@ -51,6 +51,9 @@ const createProblem = async (req, res) => {
             })
 
             const testResult = await submitTokens(arrOfTokens);
+
+            console.log(testResult);
+            
             for (let test of testResult) {
                 if (test.status_id != 3) {
                     return res.status(400).send("Error: " + ErrorCase[testcase.status_id])
@@ -128,7 +131,7 @@ const updateProblem = async (req, res) => {
 
         const updatedProblem = await Problem.findByIdAndUpdate(id, { ...req.body }, { runValidators: true, new: true });
 
-        res.status(200).send(updateProblem);
+        res.status(200).send(updatedProblem);
     }
     catch (err) {
         res.status(500).send("Error: " + err.message);
@@ -162,7 +165,7 @@ const getProblemById = async (req, res) => {
             return res.status(400).send("Missing Id field");
         }
 
-        const dsaProblem = await Problem.findById(id);
+        const dsaProblem = await Problem.findById(id).select('_id title description difficulty tags visibleTestCases startCode referenceSolution');
         if (!dsaProblem) {
             return res.status(400).send("No such Id exist for problem");
         }
@@ -176,7 +179,7 @@ const getProblemById = async (req, res) => {
 
 const getAllProblems = async (req, res) => {
     try{
-        const allProblems = await Problem.find({});
+        const allProblems = await Problem.find({}).select('_id title difficulty tags');
         if(allProblems.length==0){
            return res.send(404).send("No problem in the DB");
         }
