@@ -18,6 +18,7 @@ const adminMiddleware = async (req, res, next) => {
             throw new Error('Invalid token');
         }
         if(role!='admin'){
+            console.log("Role problem")
             throw new Error('Invalid token');
         }
         const result = await User.findById(_id);
@@ -28,7 +29,8 @@ const adminMiddleware = async (req, res, next) => {
         next();
     }
     catch (err) {
-        res.status(401).send("Error: "+err.message);
+        console.log(err);
+        res.status(401).send(err);
     }
 }
 

@@ -35,8 +35,13 @@ const userSchema = new Schema({
         enum:['admin', 'user'], 
         default:'user'
     }, 
-    problemSoved:{
-        type:[String]
+    problemSolved:{
+        type: [
+            {
+                type:Schema.Types.ObjectId,
+                ref:'problems',
+            }
+        ] 
     }
 }, {timestamps:true});
 

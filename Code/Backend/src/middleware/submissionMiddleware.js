@@ -18,7 +18,7 @@ const submitCode = async (req, res) => {
         const problem = await Problem.findById(problemId);
 
         //initially save the submitted code with some other details in the DB
-        const submittedResult = Submission.create({
+        const submittedResult = await Submission.create({
             userId,
             problemId,
             code,
@@ -30,7 +30,7 @@ const submitCode = async (req, res) => {
         const languageId = getLanguageId(language);
         const submissions = problem.hiddenTestCases.map((testcase) => {
             return {
-                source_code: completeCode,
+                source_code: code,
                 language_id: languageId,
                 stdin: testcase.input,
                 expected_output: testcase.output
@@ -44,6 +44,7 @@ const submitCode = async (req, res) => {
         })
 
         const testResult = await submitTokens(arrOfTokens);
+        
        // update submittedResult
        let passedTCCount = 0;
        let totalRuntime = 0;
@@ -72,7 +73,14 @@ const submitCode = async (req, res) => {
       submittedResult.runtime = totalRuntime;
       submittedResult.memory = maxMemory;
     
-     await submittedResult.save();
+      await submittedResult.save();
+      
+
+     if(!req.result.problemSolved.includes(problemId)){
+        req.result.problemSolved.push(problemId);
+        await req.result.save();
+     }
+
      res.status(201).send(submittedResult);
     }
     catch (err) {

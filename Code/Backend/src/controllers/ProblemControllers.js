@@ -52,7 +52,7 @@ const createProblem = async (req, res) => {
 
             const testResult = await submitTokens(arrOfTokens);
 
-            console.log(testResult);
+            // console.log(testResult);
             
             for (let test of testResult) {
                 if (test.status_id != 3) {
@@ -190,11 +190,17 @@ const getAllProblems = async (req, res) => {
     }
 }
 
-const getAllSolvedProblems = async (req, res) => {
-
+const getAllSolvedProblemsCnt = async (req, res) => {
+    try{
+        const cnt = req.result.problemSolved.length;
+        res.status(200).send(cnt);
+    }
+    catch(err){
+        res.status(500).send("Error: " + err.message);
+    }
 }
 
-module.exports = { createProblem, updateProblem, deleteProblem, getProblemById, getAllProblems, getAllSolvedProblems };
+module.exports = { createProblem, updateProblem, deleteProblem, getProblemById, getAllProblems, getAllSolvedProblemsCnt };
 
 
 /*
