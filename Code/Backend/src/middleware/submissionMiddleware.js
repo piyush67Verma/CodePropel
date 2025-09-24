@@ -87,62 +87,50 @@ const submitCode = async (req, res) => {
         res.status(500).send('Error: ' + err.message);
     }
 
+    
+}
 
+const runCode = async(req, res)=>{
+     try {
+
+        const problemId = req.params.id;
+
+        const { code, language } = req.body;
+
+        //validating above fields
+        if (!problemId || !code || !language) {
+            return res.status(400).send("Some fields missing");
+        }
+
+        //fetching problem 
+        const problem = await Problem.findById(problemId);
+
+        
+        // Pass the code to judge0 to execute 
+        const languageId = getLanguageId(language);
+        const submissions = problem.visibleTestCases.map((testcase) => {
+            return {
+                source_code: code,
+                language_id: languageId,
+                stdin: testcase.input,
+                expected_output: testcase.output
+            }
+        });
+
+        const submitResult = await submitBatch(submissions);
+       
+        const arrOfTokens = submitResult.map((obj) => {
+            return obj.token;
+        })
+       
+        const testResult = await submitTokens(arrOfTokens);
+        
+        res.status(200).send(testResult);
+    }
+    catch (err) {
+        res.status(500).send('Error: ' + err.message);
+    }
 }
 
 
-/*
-
-const submissionSchema = new Schema({
-    userId:{
-        type:Schema.Types.ObjectId,
-        ref:'users', 
-        required:true
-    }, 
-    probemId:{
-        type:Schema.Types.ObjectId,
-        ref:'problems', 
-        required:true
-    },
-    code:{
-        type:String,
-        required:true
-    },
-    language:{
-        type:String,
-        required:true,
-        enum:['c++', 'java', 'javascript', 'python']
-    }, 
-    status:{
-        type:String,
-        enum:['pending','accepted', 'wrong', 'error'],
-        required:true,
-        default:'pending'
-    }, 
-    runtime:{
-        type:Number,
-        default:0
-    },
-    memory:{
-        type:Number,
-        default:0
-    },
-    errorMessage:{
-        type:String,
-        default:''
-    },
-    testCasesPassed:{
-        type:Number,
-        default:0
-    },
-    testCasesTotal:{
-        type:Number,
-        default:0
-    }
-    
-}, {timestamps:true});
-
-
-
-*/
-module.exports = submitCode;
+module.exports = {submitCode, runCode};

@@ -1,6 +1,7 @@
 const { getLanguageId, submitBatch, submitTokens } = require('../utils/problemUtility');
 const Problem = require('../models/problems');
-
+const User = require('../models/user');
+const Submission = require('../models/submission');
 const ErrorCase = {
     4: "Wrong Answer",
     5: "Time Limit Exceeded",
@@ -190,17 +191,37 @@ const getAllProblems = async (req, res) => {
     }
 }
 
-const getAllSolvedProblemsCnt = async (req, res) => {
+const getAllSolvedProblems = async (req, res) => {
     try{
-        const cnt = req.result.problemSolved.length;
-        res.status(200).send(cnt);
+      const userId = req.result._id;
+    //   const user = await User.findById(userId).populate('problemSolved');
+      const user = await User.findById(userId).populate({
+        path:'problemSolved',
+        select:'_id, title description difficulty tags'
+      });
+      res.status(200).send(user);  
     }
     catch(err){
         res.status(500).send("Error: " + err.message);
     }
 }
 
-module.exports = { createProblem, updateProblem, deleteProblem, getProblemById, getAllProblems, getAllSolvedProblemsCnt };
+
+const submissionsOfAProblem = async(req, res)=>{
+    try{
+        const problemId = req.params.id;
+        const userId = req.result._id;
+        const submissions = await Submission.find({userId, problemId});
+        if(submissions.length==0){
+            res.status(200).send("No submission present");
+        }
+        res.status(200).send(submissions);
+    }
+    catch(err){
+        res.status(500).send("Error: "+err);
+    }
+}
+module.exports = { createProblem, updateProblem, deleteProblem, getProblemById, getAllProblems, getAllSolvedProblems, submissionsOfAProblem};
 
 
 /*
