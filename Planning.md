@@ -39,3 +39,10 @@
     3.1 problem id 
     3.2 user solution 
     3.3 solution accepted or rejected 
+
+
+For Frontend Redux toolkit Store:
+1. user
+2. loading 
+3. error
+4. isAuthenticated
