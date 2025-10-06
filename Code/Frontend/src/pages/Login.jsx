@@ -16,7 +16,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, load, error } = useSelector((state) => state.auth);
+  const { isAuthenticated, loading, error } = useSelector((state) => state.auth);
 
   const { register, handleSubmit, formState: { errors }, } = useForm({ resolver: zodResolver(loginSchema) });
 
@@ -30,7 +30,7 @@ const Login = () => {
     dispatch(loginUser(data));
   }
 
-  if (load) {
+  if (loading) {
     return <span class="loading loading-spinner loading-lg"></span>
   }
   return (

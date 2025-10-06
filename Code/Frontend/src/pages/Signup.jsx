@@ -20,7 +20,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, load, error } = useSelector((state) => state.auth);
+  const { isAuthenticated, loading, error } = useSelector((state) => state.auth);
 
   const { register, handleSubmit, formState: { errors }, } = useForm({ resolver: zodResolver(signupSchema) });
   /*
@@ -58,7 +58,7 @@ const Signup = () => {
     dispatch(registerUser(data));
   }
 
-  if (load) {
+  if (loading) {
     return <span class="loading loading-spinner loading-lg"></span>
   }
 
@@ -138,10 +138,10 @@ const Signup = () => {
         <div className="form-control mt-2 flex justify-center">
           <button
             type="submit"
-            className={`btn btn-primary ${load ? 'loading' : ''}`}
-            disabled={load}
+            className={`btn btn-primary ${loading ? 'loading' : ''}`}
+            disabled={loading}
           >
-            {load ? 'Signing Up...' : 'Sign Up'}
+            {loading ? 'Signing Up...' : 'Sign Up'}
           </button>
         </div>
 
