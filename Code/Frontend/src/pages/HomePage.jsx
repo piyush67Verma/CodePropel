@@ -85,7 +85,7 @@ const HomePage = () => {
             </div>
             <ul className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li><button onClick={handleLogout}>Logout</button></li>
-              {/* {user.role=='admin'&&<li><NavLink to="/admin">Admin</NavLink></li>} */}
+              {user.role=='admin'&&<li><NavLink to="/admin">Admin</NavLink></li>}
             </ul>
           </div>
         </div>
@@ -136,7 +136,7 @@ const HomePage = () => {
               <div className="card-body">
                 <div className="flex items-center justify-between">
                   <h2 className="card-title">
-                    <NavLink to={`/problem/problemById/${problem._id}`} className="hover:text-primary">
+                    <NavLink to={`/problem/${problem._id}`} className="hover:text-primary">
                       {problem.title}
                     </NavLink>
                   </h2>

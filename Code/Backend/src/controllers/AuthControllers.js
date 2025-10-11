@@ -16,7 +16,8 @@ const register = async (req, res, next) => {
         const reply = {
             firstName: user.firstName,
             emialId: user.emailId,
-            _id:user._id
+            _id:user._id,
+            role:user.role
         }
         const { _id, emailId } = user;
         const token = jwt.sign({ _id, emailId, role:'user' }, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 60 });
@@ -47,7 +48,8 @@ const login = async (req, res, next) => {
         const reply = {
             firstName: user.firstName,
             emialId: user.emailId,
-            _id:user._id
+            _id:user._id,
+            role:user.role
         }
         const token = jwt.sign({ _id: user._id, emailId, role:user.role}, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 60 });
         res.cookie('token', token, { maxAge: 60 * 60 * 1000 });

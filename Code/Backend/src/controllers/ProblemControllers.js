@@ -118,6 +118,8 @@ const updateProblem = async (req, res) => {
                 ]
             
             */
+           console.log("submitResult =", submitResult);
+            console.log("Type of submitResult =", typeof submitResult);
             const arrOfTokens = submitResult.map((obj) => {
                 return obj.token;
             })
@@ -177,6 +179,28 @@ const getProblemById = async (req, res) => {
     }
 }
 
+// get problem by id with hidden testcases
+const getProblemByIdWHTC = async (req, res) => {
+    const { id } = req.params;
+    try {
+        if (!id) {
+            return res.status(400).send("Missing Id field");
+        }
+
+        const dsaProblem = await Problem.findById(id).select('_id title description difficulty tags visibleTestCases hiddenTestCases startCode referenceSolution');
+        if (!dsaProblem) {
+            return res.status(400).send("No such Id exist for problem");
+        }
+        res.status(200).send(dsaProblem);
+    }
+    catch (err) {
+        res.status(500).send("Error: "+ err.message);
+    }
+}
+
+
+
+
 
 const getAllProblems = async (req, res) => {
     try{
@@ -221,7 +245,7 @@ const submissionsOfAProblem = async(req, res)=>{
         res.status(500).send("Error: "+err);
     }
 }
-module.exports = { createProblem, updateProblem, deleteProblem, getProblemById, getAllProblems, getAllSolvedProblems, submissionsOfAProblem};
+module.exports = { createProblem, updateProblem, deleteProblem, getProblemById, getProblemByIdWHTC, getAllProblems, getAllSolvedProblems, submissionsOfAProblem};
 
 
 /*
