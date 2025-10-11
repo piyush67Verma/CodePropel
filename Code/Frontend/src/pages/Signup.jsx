@@ -65,7 +65,7 @@ const Signup = () => {
 
   return (
 
-    <div className="flex items-center justify-center min-h-screen bg-gray-600">
+    <div className="flex items-center justify-center min-h-screen bg-base-300">
       <form
         onSubmit={handleSubmit(submittedData)}
         className="card w-full max-w-sm shadow-xl bg-base-100 p-6"
