@@ -7,6 +7,7 @@ const problemRouter = require('./routes/problemRoute');
 const redisClient = require('./config/redis');
 const submitRouter = require('./routes/submitRoute');
 const cors = require('cors');
+const aiRouter = require('./routes/aiChatting');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 app.use('/problem', problemRouter);
 app.use('/submission', submitRouter);
+app.use('/ai', aiRouter);
 
 const initializeConnection = async () => {
 

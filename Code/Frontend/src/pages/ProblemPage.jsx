@@ -4,7 +4,8 @@ import Editor from '@monaco-editor/react';
 import { useParams } from 'react-router';
 import axiosClient from "../utils/axiosClient"
 import SubmissionHistory from "../components/SubmissionHistory"
-// import ChatAi from '../components/ChatAi';
+import ChatAi from '../components/ChatAi';
+import ThemeToggle from '../components/ThemeToggle';
 
 const langMap = {
   cpp: 'C++',
@@ -164,12 +165,12 @@ const ProblemPage = () => {
           >
             Description
           </button>
-          <button
+          {/* <button
             className={`tab ${activeLeftTab === 'editorial' ? 'tab-active' : ''}`}
             onClick={() => setActiveLeftTab('editorial')}
           >
             Editorial
-          </button>
+          </button> */}
           <button
             className={`tab ${activeLeftTab === 'solutions' ? 'tab-active' : ''}`}
             onClick={() => setActiveLeftTab('solutions')}
@@ -228,14 +229,14 @@ const ProblemPage = () => {
                 </div>
               )}
 
-              {activeLeftTab === 'editorial' && (
+              {/* {activeLeftTab === 'editorial' && (
                 <div className="prose max-w-none">
                   <h2 className="text-xl font-bold mb-4">Editorial</h2>
                   <div className="whitespace-pre-wrap text-sm leading-relaxed">
                     {'Editorial is here for the problem'}
                   </div>
                 </div>
-              )}
+              )} */}
 
               {activeLeftTab === 'solutions' && (
                 <div>
@@ -269,9 +270,9 @@ const ProblemPage = () => {
               {activeLeftTab === 'chatAI' && (
                 <div className="prose max-w-none">
                   <h2 className="text-xl font-bold mb-4">CHAT with AI</h2>
-                  {/* <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                    <ChatAi></ChatAi>
-                  </div> */}
+                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                    <ChatAi problem={problem}></ChatAi>
+                  </div>
                 </div>
               )}
 
@@ -303,6 +304,9 @@ const ProblemPage = () => {
           >
             Result
           </button>
+          {/* <div className='fixed top-4 right-4 z-50'>
+            <ThemeToggle/>
+          </div> */}
         </div>
 
         {/* Right Content */}

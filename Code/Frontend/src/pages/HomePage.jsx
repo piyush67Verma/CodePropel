@@ -4,7 +4,7 @@ import { logoutUser } from '../authSlice';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axiosClient from '../utils/axiosClient';
-
+import ThemeToggle from '../components/ThemeToggle';
 const HomePage = () => {
   const dispatch = useDispatch();
   const [problems, setProblems] = useState([]);
@@ -79,6 +79,7 @@ const HomePage = () => {
           <NavLink to="/" className="btn btn-ghost text-xl">CodePropel</NavLink>
         </div>
         <div className="flex-none gap-4">
+          <ThemeToggle />
           <div className="dropdown dropdown-end">
             <div tabIndex={0} className="btn btn-ghost">
               {user?.firstName}

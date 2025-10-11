@@ -65,9 +65,9 @@ function ChatAi({problem}) {
                 className="sticky bottom-0 p-4 bg-base-100 border-t"
             >
                 <div className="flex items-center">
-                    <input 
+                    <textarea 
                         placeholder="Ask me anything" 
-                        className="input input-bordered flex-1" 
+                        className="input input-bordered flex-1 p-1" 
                         {...register("message", { required: true, minLength: 2 })}
                     />
                     <button 
