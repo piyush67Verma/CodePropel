@@ -3,45 +3,73 @@ import { useForm } from "react-hook-form";
 import axiosClient from "../utils/axiosClient";
 import { Send } from 'lucide-react';
 
-function ChatAi({problem}) {
+function ChatAi({ problem }) {
     const [messages, setMessages] = useState([
-        { role: 'model', parts:[{text: "Hi, How are you"}]},
-        { role: 'user', parts:[{text: "I am Good"}]}
+        { role: 'model', parts: [{ text: "Hi, How are you" }] },
+        { role: 'user', parts: [{ text: "I am Good" }] }
     ]);
 
-    const { register, handleSubmit, reset,formState: {errors} } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
+    // const onSubmit = async (data) => {
+
+    //     setMessages(prev => [...prev, { role: 'user', parts:[{text: data.message}] }]);
+    //     reset();
+
+    //     try {
+
+    //         const response = await axiosClient.post("/ai/chat", {
+    //             messages:messages,
+    //             title:problem.title,
+    //             description:problem.description,
+    //             testCases: problem.visibleTestCases,
+    //             startCode:problem.startCode
+    //         });
+
+
+    //         setMessages(prev => [...prev, { 
+    //             role: 'model', 
+    //             parts:[{text: response.data.message}] 
+    //         }]);
+    //     } catch (error) {
+    //         console.error("API Error:", error);
+    //         setMessages(prev => [...prev, { 
+    //             role: 'model', 
+    //             parts:[{text: "Error from AI Chatbot"}]
+    //         }]);
+    //     }
+    // };
     const onSubmit = async (data) => {
-        
-        setMessages(prev => [...prev, { role: 'user', parts:[{text: data.message}] }]);
+        const newMessage = { role: 'user', parts: [{ text: data.message }] };
+        const updatedMessages = [...messages, newMessage]; //includes latest user input
+        setMessages(updatedMessages);
         reset();
 
         try {
-            
             const response = await axiosClient.post("/ai/chat", {
-                messages:messages,
-                title:problem.title,
-                description:problem.description,
+                messages: updatedMessages, //send updated array, not stale state
+                title: problem.title,
+                description: problem.description,
                 testCases: problem.visibleTestCases,
-                startCode:problem.startCode
+                startCode: problem.startCode
             });
 
-           
-            setMessages(prev => [...prev, { 
-                role: 'model', 
-                parts:[{text: response.data.message}] 
-            }]);
+            setMessages(prev => [
+                ...prev,
+                { role: 'model', parts: [{ text: response.data.message }] }
+            ]);
+
         } catch (error) {
             console.error("API Error:", error);
-            setMessages(prev => [...prev, { 
-                role: 'model', 
-                parts:[{text: "Error from AI Chatbot"}]
-            }]);
+            setMessages(prev => [
+                ...prev,
+                { role: 'model', parts: [{ text: "Error from AI Chatbot" }] }
+            ]);
         }
     };
 
@@ -49,29 +77,30 @@ function ChatAi({problem}) {
         <div className="flex flex-col h-screen max-h-[80vh] min-h-[500px]">
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map((msg, index) => (
-                    <div 
-                        key={index} 
+                    <div
+                        key={index}
                         className={`chat ${msg.role === "user" ? "chat-end" : "chat-start"}`}
                     >
                         <div className="chat-bubble bg-base-200 text-base-content">
+                            
                             {msg.parts[0].text}
                         </div>
                     </div>
                 ))}
                 <div ref={messagesEndRef} />
             </div>
-            <form 
-                onSubmit={handleSubmit(onSubmit)} 
+            <form
+                onSubmit={handleSubmit(onSubmit)}
                 className="sticky bottom-0 p-4 bg-base-100 border-t"
             >
                 <div className="flex items-center">
-                    <textarea 
-                        placeholder="Ask me anything" 
-                        className="input input-bordered flex-1 p-1" 
+                    <textarea
+                        placeholder="Ask me anything"
+                        className="input input-bordered flex-1 p-1"
                         {...register("message", { required: true, minLength: 2 })}
                     />
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className="btn btn-ghost ml-2"
                         disabled={errors.message}
                     >

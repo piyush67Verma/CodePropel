@@ -154,7 +154,7 @@ const ProblemPage = () => {
   }
 
   return (
-    <div className="h-screen flex bg-base-100">
+    <div className="h-screen flex bg-base-100 flex-wrap">
       {/* Left Panel */}
       <div className="w-1/2 flex flex-col border-r border-base-300">
         {/* Left Tabs */}
@@ -322,7 +322,7 @@ const ProblemPage = () => {
                       className={`btn btn-sm ${selectedLanguage === lang ? 'btn-primary' : 'btn-ghost'}`}
                       onClick={() => handleLanguageChange(lang)}
                     >
-                      {lang === 'cpp' ? 'C++' : lang === 'javascript' ? 'JavaScript' : 'Java'}
+                      {(lang === 'cpp' ? 'C++' : lang === 'javascript' ? 'JavaScript' : 'Java').toUpperCase()}
                     </button>
                   ))}
                 </div>
@@ -336,7 +336,7 @@ const ProblemPage = () => {
                   value={code}
                   onChange={handleEditorChange}
                   onMount={handleEditorDidMount}
-                  theme="vs-dark"
+                  theme={localStorage.getItem('theme') == 'dark'? 'vs-dark' : 'light'}
                   options={{
                     fontSize: 14,
                     minimap: { enabled: false },

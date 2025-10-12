@@ -99,7 +99,7 @@ const SubmissionHistory = ({ problemId }) => {
                 {submissions.map((sub, index) => (
                   <tr key={sub._id}>
                     <td>{index + 1}</td>
-                    <td className="font-mono">{sub.language}</td>
+                    <td className="font-mono">{sub.language.toUpperCase()}</td>
                     <td>
                       <span className={`badge ${getStatusColor(sub.status)}`}>
                         {sub.status.charAt(0).toUpperCase() + sub.status.slice(1)}

@@ -3,14 +3,23 @@ const { GoogleGenAI } = require("@google/genai");
 const solveDoubt = async (req, res) => {
 
     try {
-        
-        const {messages,title,description,testCases,startCode} = req.body;
+
+        const { messages, title, description, testCases, startCode } = req.body;
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
         async function main() {
+            const cleanedMessages = (messages || [])
+                .filter(m => m && m.parts && m.parts.length > 0)
+                .map(m => ({
+                    role: m.role || 'user',
+                    parts: m.parts
+                        .filter(p => p && p.text && p.text.trim() !== '')
+                        .map(p => ({ text: p.text }))
+                }))
+                .filter(m => m.parts.length > 0);
             const response = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
-                contents: messages,
+                contents: cleanedMessages,
                 config: {
                     systemInstruction: `
 You are an expert Data Structures and Algorithms (DSA) tutor specializing in helping users solve coding problems. Your role is strictly limited to DSA-related assistance only.
