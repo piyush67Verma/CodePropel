@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import axiosClient from '../utils/axiosClient';
 import { NavLink, useNavigate } from 'react-router';
-
+import { useState } from 'react';
 // Zod schema matching the problem schema
 const problemSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -37,7 +37,8 @@ const problemSchema = z.object({
   ).length(3, 'All three languages required')
 });
 
-function AdminPanel() {
+function AdminCreate() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -80,15 +81,26 @@ function AdminPanel() {
 
   const onSubmit = async (data) => {
     console.log(data);
+    setLoading(true);
     try {
 
       await axiosClient.post('/problem/create', data);
+      setLoading(false);
       alert('Problem created successfully!');
       navigate('/');
     } catch (error) {
+      setLoading(false);
       alert(`Error: ${error.response?.data?.message || error.message}`);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-6">
@@ -307,4 +319,4 @@ function AdminPanel() {
   );
 }
 
-export default AdminPanel;
+export default AdminCreate;
