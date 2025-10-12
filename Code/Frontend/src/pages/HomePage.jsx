@@ -123,7 +123,8 @@ const HomePage = () => {
           >
             <option value="all">All Tags</option>
             <option value="Array">Array</option>
-            <option value="LinkedList">Linked List</option>
+            {/* <option value="LinkedList">Linked List</option> */}
+            <option value="Binary Search">Binary Search</option>
             <option value="Graph">Graph</option>
             <option value="DP">DP</option>
             <option value="Stack">Stack</option>

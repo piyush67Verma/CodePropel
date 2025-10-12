@@ -156,7 +156,7 @@ const ProblemPage = () => {
   return (
     <div className="h-screen flex bg-base-100 flex-wrap">
       {/* Left Panel */}
-      <div className="w-1/2 flex flex-col border-r border-base-300">
+      <div className="w-1/2 flex flex-col border-r border-base-300 h-screen">
         {/* Left Tabs */}
         <div className="tabs  tabs-lift tabs-bordered bg-base-200 px-4">
           <button
@@ -187,12 +187,12 @@ const ProblemPage = () => {
             className={`tab ${activeLeftTab === 'chatAI' ? 'tab-active' : ''}`}
             onClick={() => setActiveLeftTab('chatAI')}
           >
-            ChatAI
+            Chat With AI
           </button>
         </div>
 
         {/* Left Content */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-scroll p-6">
           {problem && (
             <>
               {activeLeftTab === 'description' && (
@@ -202,7 +202,7 @@ const ProblemPage = () => {
                     <div className={`badge badge-outline ${getDifficultyColor(problem.difficulty)}`}>
                       {problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)}
                     </div>
-                    <div className="badge badge-soft badge-info">{problem.tags}</div>
+                    <div className="badge badge-soft badge-info h-fit w-fit">{problem.tags}</div>
                   </div>
 
                   <div className="prose max-w-none">
@@ -269,7 +269,7 @@ const ProblemPage = () => {
 
               {activeLeftTab === 'chatAI' && (
                 <div className="prose max-w-none">
-                  <h2 className="text-xl font-bold mb-4">CHAT with AI</h2>
+                  <h2 className="text-xl font-bold mb-4">Chat With AI</h2>
                   <div className="whitespace-pre-wrap text-sm leading-relaxed">
                     <ChatAi problem={problem}></ChatAi>
                   </div>
@@ -283,7 +283,7 @@ const ProblemPage = () => {
       </div>
 
       {/* Right Panel */}
-      <div className="w-1/2 flex flex-col">
+      <div className="w-1/2 flex flex-col h-screen">
         {/* Right Tabs */}
         <div className="tabs tabs-lift tabs-bordered bg-base-200 px-4">
           <button
@@ -336,7 +336,7 @@ const ProblemPage = () => {
                   value={code}
                   onChange={handleEditorChange}
                   onMount={handleEditorDidMount}
-                  theme={localStorage.getItem('theme') == 'dark'? 'vs-dark' : 'light'}
+                  theme={localStorage.getItem('theme') === 'dark'? 'vs-dark' : 'light'}
                   options={{
                     fontSize: 14,
                     minimap: { enabled: false },

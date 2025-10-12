@@ -57,7 +57,7 @@ const createProblem = async (req, res) => {
             
             for (let test of testResult) {
                 if (test.status_id != 3) {
-                    return res.status(400).send("Error: " + ErrorCase[testcase.status_id])
+                    return res.status(400).send("Error: " + ErrorCase[test.status_id])
                 }
             }
         }
@@ -127,7 +127,7 @@ const updateProblem = async (req, res) => {
             const testResult = await submitTokens(arrOfTokens);
             for (let test of testResult) {
                 if (test.status_id != 3) {
-                    return res.status(400).send("Error: " + ErrorCase[testcase.status_id])
+                    return res.status(400).send("Error: " + ErrorCase[test.status_id])
                 }
             }
         }
