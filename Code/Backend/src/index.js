@@ -1,3 +1,4 @@
+require('dotenv').config({path:'../.env'});
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') })
 const express = require('express');
 const main = require('./config/db');
@@ -18,38 +19,20 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-
-// Let Redis and DB connect themselves when imported
-// No manual connection initialization needed
-
 app.use('/auth', authRouter);
 app.use('/problem', problemRouter);
 app.use('/submission', submitRouter);
 app.use('/ai', aiRouter);
 
-app.get('/api/redis-status', async (req, res) => {
-    try {
-        if (!redisClient.isOpen) {
-            await redisClient.connect();
-        }
+app.get('/check', (req, res)=>{
+    res.send("Server running correctly, resp of /check endpoint");
+})
 
-        await redisClient.set('test_key', 'Hello from Vercel!');
-        const value = await redisClient.get('test_key');
-        
-        res.json({
-            status: 'success',
-            redisConnected: true,
-            testValue: value,
-        });
-    } catch (error) {
-        console.error('Redis test failed:', error);
-        res.status(500).json({
-            status: 'error',
-            redisConnected: false,
-            error: error.message,
-            hasPassword: !!process.env.REDIS_PASSWORD
-        });
-    }
-});
+const initializeConnection = async () => {
 
-module.exports = app;
+    await Promise.all([redisClient.connect(), main()]);
+    isConnected = true;
+    console.log("DB connected");
+}
+
+initializeConnection();

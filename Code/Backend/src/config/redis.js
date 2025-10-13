@@ -10,6 +10,5 @@ const redisClient = redis.createClient({
     }
 });
 
-redisClient.connect().catch(console.error); // Auto-connect when imported
 
 module.exports = redisClient;

@@ -5,6 +5,4 @@ async function main(){
     console.log("MongoDB connected");
 }
 
-main().catch(err => console.log(err));
-
 module.exports = main;
