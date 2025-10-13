@@ -12,35 +12,53 @@ const aiRouter = require('./routes/aiChatting');
 const app = express();
 
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true
+    origin: "http://localhost:5173",
+    credentials: true
 }));
 
 app.use(express.json());
 app.use(cookieParser());
 
+let isConnecting = false;
 let isConnected = false;
-const initializeConnection = async () => {
 
-    await Promise.all([redisClient.connect(), main()]);
-    isConnected = true;
-    console.log("DB connected");
+const initializeConnection = async () => {
+    if (isConnected || isConnecting) {
+        return;
+    }
+    
+    isConnecting = true;
+    console.log("Initializing connections...");
+    
+    try {
+        await Promise.all([redisClient.connect().catch(err => {
+            console.log('Redis connection attempt:', err.message);
+        }), main()]);
+        
+        isConnected = true;
+        console.log("All connections established");
+    } catch (error) {
+        console.error("Connection initialization failed:", error);
+    } finally {
+        isConnecting = false;
+    }
 }
 
-app.use((req, res, next)=>{
-    if(!isConnected){
-        initializeConnection();
-    }
-    next();
-})
+// Initialize connections once when app starts
+initializeConnection();
 
-
+// Remove the middleware that runs on every request
+// app.use((req, res, next)=>{
+//     if(!isConnected){
+//         initializeConnection();
+//     }
+//     next();
+// })
 
 app.use('/auth', authRouter);
 app.use('/problem', problemRouter);
 app.use('/submission', submitRouter);
 app.use('/ai', aiRouter);
-
 
 app.get('/api/redis-status', async (req, res) => {
     try {
@@ -50,19 +68,33 @@ app.get('/api/redis-status', async (req, res) => {
             redisPort: 19391
         });
 
+        // Check if Redis is connected, if not try to connect
         if (!redisClient.isOpen) {
-            await redisClient.connect();
+            try {
+                await redisClient.connect();
+            } catch (connectError) {
+                console.log('Redis connection in endpoint failed:', connectError.message);
+            }
         }
 
-        // Test basic operations
-        await redisClient.set('test_key', 'Hello from Vercel!');
-        const value = await redisClient.get('test_key');
-        
-        res.json({
-            status: 'success',
-            redisConnected: true,
-            testValue: value,
-        });
+        // Test basic operations only if Redis is connected
+        if (redisClient.isOpen) {
+            await redisClient.set('test_key', 'Hello from Vercel!');
+            const value = await redisClient.get('test_key');
+            
+            res.json({
+                status: 'success',
+                redisConnected: true,
+                testValue: value,
+            });
+        } else {
+            res.status(500).json({
+                status: 'error',
+                redisConnected: false,
+                error: 'Redis not connected',
+                hasPassword: !!process.env.REDIS_PASSWORD
+            });
+        }
     } catch (error) {
         console.error('Redis test failed:', error);
         res.status(500).json({
@@ -74,11 +106,4 @@ app.get('/api/redis-status', async (req, res) => {
     }
 });
 
-
-
-
 module.exports = app;
-
-
-
-

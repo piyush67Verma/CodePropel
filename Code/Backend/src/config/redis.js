@@ -19,40 +19,21 @@ const redisClient = redis.createClient({
     socket: {
         host: 'redis-19391.crce182.ap-south-1-1.ec2.redns.redis-cloud.com',
         port: 19391,
-        tls: true
+        tls: true, // Important for cloud Redis
+        reconnectStrategy: (retries) => {
+            return Math.min(retries * 100, 3000);
+        }
     }
 });
 
-// Add comprehensive event listeners
-redisClient.on('error', (err) => {
-    console.error('Redis Client Error:', err);
-});
+// Event listeners for debugging
+redisClient.on('connect', () => console.log('Redis: Connecting...'));
+redisClient.on('ready', () => console.log('Redis: Ready'));
+redisClient.on('error', (err) => console.error('Redis Error:', err));
+redisClient.on('end', () => console.log('Redis: Disconnected'));
+redisClient.on('reconnecting', () => console.log('Redis: Reconnecting...'));
 
-redisClient.on('connect', () => {
-    console.log('Redis: Attempting to connect...');
-});
-
-redisClient.on('ready', () => {
-    console.log('Redis: Client ready and connected');
-});
-
-redisClient.on('end', () => {
-    console.log('Redis: Connection closed');
-});
-
-redisClient.on('reconnecting', () => {
-    console.log('Redis: Reconnecting...');
-});
-
-// Connect with detailed error handling
-redisClient.connect()
-    .then(() => {
-        console.log('Redis: Successfully connected');
-        console.log('Redis Host:', 'redis-19391.crce182.ap-south-1-1.ec2.redns.redis-cloud.com');
-    })
-    .catch((err) => {
-        console.error('Redis: Connection failed:', err);
-        console.log('REDIS_PASSWORD exists:', !!process.env.REDIS_PASSWORD);
-    });
+// Don't auto-connect here, let the main app handle connection
+// redisClient.connect().catch(console.error);
 
 module.exports = redisClient;
