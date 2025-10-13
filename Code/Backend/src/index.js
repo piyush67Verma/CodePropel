@@ -25,7 +25,7 @@ app.use('/submission', submitRouter);
 app.use('/ai', aiRouter);
 
 app.get('/check', (req, res)=>{
-    res.send("Server running correctly, resp of /check endpoint");
+    res.send("Server running correctly, resp of /check endpoint")
 })
 
 const initializeConnection = async () => {
@@ -36,3 +36,5 @@ const initializeConnection = async () => {
 }
 
 initializeConnection();
+
+module.exports = app;
