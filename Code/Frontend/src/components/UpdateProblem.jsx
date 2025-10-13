@@ -8,7 +8,7 @@ const problemSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
   difficulty: z.enum(['easy', 'medium', 'hard']),
-  tags: z.enum(['Array', 'Linked List', 'Graph', 'DP', 'Stack', 'String']),
+  tags: z.enum(['Array', 'Graph', 'DP', 'Stack', 'Binary Search']),
   visibleTestCases: z.array(
     z.object({
       input: z.string().min(1, 'Input is required'),
@@ -183,13 +183,12 @@ const UpdateProblem = () => {
                   {...register('tags')}
                   className={`select select-bordered ${errors.tags && 'select-error'}`}
                 >
-                  {/*   enum:['Array', 'Linked List', 'DP', 'Graph', 'Stack', 'String'], */}
+                  {/*   enum:['Array', 'DP', 'Graph', 'Stack', 'Binary Search'], */}
                   <option value="Array">Array</option>
-                  <option value="Linked List">Linked List</option>
                   <option value="Graph">Graph</option>
                   <option value="DP">DP</option>
                   <option value="Stack">Stack</option>
-                  <option value="String">String</option>
+                  <option value="Binary Search">Binary Search</option>
                 </select>
               </div>
             </div>

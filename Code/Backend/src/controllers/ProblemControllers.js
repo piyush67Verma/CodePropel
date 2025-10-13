@@ -198,10 +198,6 @@ const getProblemByIdWHTC = async (req, res) => {
     }
 }
 
-
-
-
-
 const getAllProblems = async (req, res) => {
     try{
         const allProblems = await Problem.find({}).select('_id title difficulty tags');
@@ -221,7 +217,7 @@ const getAllSolvedProblems = async (req, res) => {
     //   const user = await User.findById(userId).populate('problemSolved');
       const user = await User.findById(userId).populate({
         path:'problemSolved',
-        select:'_id, title description difficulty tags'
+        select:'_id title difficulty tags'
       });
       res.status(200).send(user);  
     }
@@ -277,27 +273,5 @@ Required Format:
 }
 
 
-
 */
 
-/*
-
-Pagination 
-
-page=2
-await Problem.find({}).skip(10).limit(10)
-
-page=3
-await Problem.find({}).skip(20).limit(10)
-
-page=4
-await Problem.find({}).skip(30).limit(10)
-
-page = x
-no of pages before this page = x-1
-no of problems in one page  = 10
-no of problems to skip = (x-1)*10 = (current page no. - 1) * limit
-await Problem.find({}).skip((page-1)*10).limit(10)
-
-
-*/

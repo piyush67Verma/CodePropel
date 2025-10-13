@@ -107,8 +107,8 @@ const submitCode = async (req, res) => {
 
         await submittedResult.save();
 
-
-        if (!req.result.problemSolved.includes(problemId)) {
+        // add the problem id to the user document
+        if (finalStatus === 'accepted' && !req.result.problemSolved.includes(problemId)) {
             req.result.problemSolved.push(problemId);
             await req.result.save();
         }
