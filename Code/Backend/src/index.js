@@ -42,6 +42,41 @@ app.use('/submission', submitRouter);
 app.use('/ai', aiRouter);
 
 
+app.get('/api/redis-status', async (req, res) => {
+    try {
+        console.log('Environment check:', {
+            hasRedisPassword: !!process.env.REDIS_PASSWORD,
+            redisHost: 'redis-19391.crce182.ap-south-1-1.ec2.redns.redis-cloud.com',
+            redisPort: 19391
+        });
+
+        if (!redisClient.isOpen) {
+            await redisClient.connect();
+        }
+
+        // Test basic operations
+        await redisClient.set('test_key', 'Hello from Vercel!');
+        const value = await redisClient.get('test_key');
+        
+        res.json({
+            status: 'success',
+            redisConnected: true,
+            testValue: value,
+        });
+    } catch (error) {
+        console.error('Redis test failed:', error);
+        res.status(500).json({
+            status: 'error',
+            redisConnected: false,
+            error: error.message,
+            hasPassword: !!process.env.REDIS_PASSWORD
+        });
+    }
+});
+
+
+
+
 module.exports = app;
 
 
