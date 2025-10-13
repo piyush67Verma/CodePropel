@@ -1,4 +1,4 @@
-require('dotenv').config({path:'../.env'});
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') })
 const express = require('express');
 const main = require('./config/db');
 const cookieParser = require('cookie-parser')
@@ -18,22 +18,32 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
+
+let isConnected = false;
+const initializeConnection = async () => {
+
+    await Promise.all([redisClient.connect(), main()]);
+    isConnected = true;
+    console.log("DB connected");
+}
+
+app.use((req, res, next)=>{
+    if(!isConnected){
+        initializeConnection();
+    }
+    next();
+})
+
+
+
 app.use('/auth', authRouter);
 app.use('/problem', problemRouter);
 app.use('/submission', submitRouter);
 app.use('/ai', aiRouter);
 
-const initializeConnection = async () => {
 
-    await Promise.all([redisClient.connect(), main()]);
-    console.log("DB connected");
+module.exports = app;
 
 
-    app.listen(process.env.PORT, () => {
-        console.log("Application Server listening at " + process.env.PORT);
-    })
-}
-
-initializeConnection();
 
 
