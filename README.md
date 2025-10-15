@@ -11,6 +11,12 @@
 > 🔗 https://code-propel-frontend.vercel.app/
 
 ---
+## Highlights
+
+* Real-time code execution for multiple languages
+* AI-powered problem-solving assistance
+* Admin panel with role-based access and problem management
+* Modern, themeable UI with Monaco Editor
 
 ## Screenshots
 
