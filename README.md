@@ -1,4 +1,4 @@
-# 🚀 CodePropel – Coding Practice Platform
+# CodePropel – Coding Practice Platform
 
 > A full-stack coding platform built with MERN, enabling users to practice coding, run solutions online, and chat with AI for assistance.
 
@@ -6,28 +6,28 @@
 
 ---
 
-## 🌐 Live Demo
+## Live Demo
 
 > 🔗 https://code-propel-frontend.vercel.app/
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-### 🏠 Home Page
+### Home Page
 ![Home Page](./assets/home-page.png)
 
-### 💻 Problem Page
+### Problem Page
 ![Problem Page](./assets/problem-page.png)
 
-### 🛠️ Admin Panel
+### Admin Panel
 ![Admin Panel](./assets/admin-panel.png)
 
 ---
 
-## 🧠 Features
+## Features
 
-### 👤 **User Features**
+### **User Features**
 
 * **Authentication**
   Secure user authentication with **JWT**. New users must **sign up** before accessing the platform.
@@ -53,13 +53,13 @@
   * **Testcase Tab** – Displays outcomes when the user **runs** code on visible test cases.  
   * **Result Tab** – Displays final outcomes when the user **submits** code on hidden test cases.  
 
-  #### 💻 Buttons
+  #### Buttons
   * **Run** – Executes code against visible test cases via **Judge0 API**.  
   * **Submit** – Executes code against hidden test cases to validate correctness via **Judge0 API**.  
 
 ---
 
-### 🛠️ **Admin Features**
+### **Admin Features**
 
 Admins have all user capabilities plus additional administrative tools:
 * Create new problems  
@@ -69,19 +69,19 @@ All accessible through a dedicated **Admin Panel**.
 
 ---
 
-### 🎨 **Themes**
+### **Themes**
 
 * Fully supports **Light** ☀️ and **Dark** 🌙 modes for comfortable coding anytime.
 
-### 🏠 Home Page Light
+### Home Page Light
 ![Home Page Light](./assets/home-page-light.png)
 
-### 💻 Problem Page Light
+### Problem Page Light
 ![Problem Page Light](./assets/problem-page-light.png)
 
 ---
 
-## 🧩 Tech Stack
+##  Tech Stack
 
 | Layer                       | Technology                                      |
 | --------------------------- | ----------------------------------------------- |
@@ -96,7 +96,7 @@ All accessible through a dedicated **Admin Panel**.
 
 ---
 
-## 🔐 Authentication & Security
+## Authentication & Security
 
 * **JWT-based authentication** ensures secure and stateless access for all users.  
 * **Role-based authorization** restricts platform modifications — only **admins** can create, update, or delete problems, while normal users can only solve them.  
@@ -104,15 +104,5 @@ All accessible through a dedicated **Admin Panel**.
   - Rate limiting to prevent abuse of API endpoints.  
   - Token blacklisting on logout to block further misuse.
 
----
-
-## 📚 Purpose
-
-This repository is created to **showcase my full-stack development skills**, demonstrating the implementation of:
-- Secure authentication and authorization
-- Real-time code execution via external APIs
-- AI-assisted learning integration  
-
-The repo is made public **for viewing commits, architecture, and code structure** only.
 
 
