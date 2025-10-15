@@ -8,7 +8,7 @@
 
 ## 🌐 Live Demo
 
-> 🔗 https://my-website.com
+> 🔗 https://code-propel-frontend.vercel.app/
 
 ---
 

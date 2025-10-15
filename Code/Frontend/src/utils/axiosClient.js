@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'https://code-propel-backend.vercel.app/',
+  baseURL: 'http://localhost:6723',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'

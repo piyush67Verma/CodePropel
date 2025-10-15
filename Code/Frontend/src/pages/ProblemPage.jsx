@@ -398,14 +398,14 @@ const ProblemPage = () => {
                   <div>
                     {runResult.success ? (
                       <div>
-                        <h4 className="font-bold text-white">✅ All test cases passed!</h4>
-                        <p className="font-bold text-sm mt-2 text-white">Runtime: {runResult.runtime + " sec"}</p>
-                        <p className="font-bold text-sm text-white">Memory: {runResult.memory + " KB"}</p>
+                        <h4 className="font-bold ">✅ All test cases passed!</h4>
+                        <p className="font-bold text-sm mt-2 ">Runtime: {runResult.runtime + " sec"}</p>
+                        <p className="font-bold text-sm ">Memory: {runResult.memory + " KB"}</p>
 
                         <div className=" flex flex-wrap mt-4 gap-4 w-full">
                           {runResult.testCases.map((tc, i) => (
                             <div key={i} className="bg-base-100 p-3 rounded text-sm w-fit">
-                              <div className="font-mono text-white">
+                              <div className="font-mono ">
                                 <div><strong>Input:</strong> <pre>{tc.stdin}</pre></div>
                                 <div><strong>Expected:</strong><pre> {tc.expected_output}</pre></div>
                                 <div><strong>Output:</strong> <pre>{tc.stdout}</pre></div>
@@ -419,11 +419,11 @@ const ProblemPage = () => {
                       </div>
                     ) : (
                       <div>
-                        <h4 className="font-bold text-white">❌ Error</h4>
+                        <h4 className="font-bold ">❌ Error</h4>
                         <div className="mt-4 space-y-2">
                           {runResult.testCases.map((tc, i) => (
                             <div key={i} className="bg-base-100 p-3 rounded text-xs">
-                              <div className="font-mono text-white">
+                              <div className="font-mono ">
                                 <div><strong>Input:</strong> {tc.stdin}</div>
                                 <div><strong>Expected:</strong> {tc.expected_output}</div>
                                 <div><strong>Output:</strong> {tc.stdout}</div>
@@ -454,8 +454,8 @@ const ProblemPage = () => {
                   <div>
                     {submitResult.accepted ? (
                       <div>
-                        <h4 className="font-bold text-lg text-white">🎉 Accepted</h4>
-                        <div className="mt-4 space-y-2 text-white">
+                        <h4 className="font-bold text-lg ">🎉 Accepted</h4>
+                        <div className="mt-4 space-y-2 ">
                           <p>Test Cases Passed: {submitResult.passedTestCases}/{submitResult.totalTestCases}</p>
                           <p>Runtime: {submitResult.runtime + " sec"}</p>
                           <p>Memory: {submitResult.memory + "KB"} </p>
@@ -463,8 +463,8 @@ const ProblemPage = () => {
                       </div>
                     ) : (
                       <div>
-                        <h4 className="font-bold text-lg text-white">❌ {submitResult.error}</h4>
-                        <div className="mt-4 space-y-2 text-white">
+                        <h4 className="font-bold text-lg ">❌ {submitResult.error}</h4>
+                        <div className="mt-4 space-y-2 ">
                           <p>Test Cases Passed: {submitResult.passedTestCases}/{submitResult.totalTestCases}</p>
                         </div>
                       </div>
